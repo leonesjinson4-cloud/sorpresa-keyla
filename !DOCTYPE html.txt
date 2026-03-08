@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Keyla ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background-color: #fcf5f5;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh;
+            color: #4a0e17;
+        }
+
+        /* --- PANTALLA DE INICIO --- */
+        #intro-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #2b040a 0%, #590d18 100%);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 100; transition: opacity 1.5s ease; text-align: center; color: #f8e5e5;
+        }
+
+        #intro-screen h1 {
+            font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 30px;
+            padding: 0 20px;
+        }
+
+        .open-btn {
+            background: transparent; color: #d4af37; border: 2px solid #d4af37;
+            padding: 15px 40px; font-size: 1.2rem; font-family: 'Montserrat', sans-serif;
+            letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+            border-radius: 50px; transition: all 0.3s ease; animation: pulse-gold 2s infinite;
+        }
+
+        /* --- TARJETA PRINCIPAL --- */
+        #card-container {
+            display: none; flex-direction: column; align-items: center;
+            max-width: 500px; padding: 40px 20px; text-align: center;
+            position: relative; z-index: 10; animation: fade-in-up 2s ease forwards; opacity: 0;
+        }
+
+        .silhouette-frame {
+            width: 220px; height: 220px; margin-bottom: 25px;
+            border-radius: 50%; border: 4px solid #d4af37; padding: 5px;
+            box-shadow: 0 15px 35px rgba(89, 13, 24, 0.2);
+            background-color: #fff; overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+            position: relative;
+        }
+
+        .silhouette-frame img {
+            width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+        }
+
+        .title { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 10px; color: #590d18; }
+        .subtitle { font-size: 1.1rem; font-style: italic; color: #8c5a61; margin-bottom: 25px; }
+        .message { font-size: 1.15rem; line-height: 1.8; text-align: justify; margin-bottom: 30px; padding: 0 15px; }
+        .signature { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 600; color: #d4af37; margin-bottom: 40px; }
+
+        /* --- BOTÓN DE VIDEO --- */
+        .video-btn {
+            background-color: #590d18; color: white; padding: 15px 30px;
+            border-radius: 50px; font-size: 1.1rem; font-weight: 600;
+            display: flex; align-items: center; gap: 10px; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(89, 13, 24, 0.4); border: 2px solid #d4af37;
+            transition: transform 0.2s; z-index: 20;
+        }
+        .video-btn:active { transform: scale(0.95); }
+
+        /* --- REPRODUCTOR DE VIDEO (MODAL) --- */
+        #video-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.95); z-index: 200;
+            justify-content: center; align-items: center; flex-direction: column;
+            opacity: 0; transition: opacity 0.5s ease;
+        }
+
+        #video-modal video {
+            width: 90%; max-width: 500px; border-radius: 15px;
+            border: 3px solid #d4af37; box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .close-video-btn {
+            color: white; font-size: 1.2rem; margin-top: 25px; cursor: pointer;
+            border: 1px solid white; padding: 10px 25px; border-radius: 25px;
+            background: transparent; transition: background 0.3s;
+        }
+        .close-video-btn:hover { background: rgba(255,255,255,0.2); }
+
+        /* --- ANIMACIONES --- */
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+        @keyframes fade-in-up { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- PÉTALOS DE ROSA --- */
+        .petal {
+            position: fixed; top: -10vh; background-color: #d62828;
+            border-radius: 15px 0 15px 0; opacity: 0.7; z-index: 1;
+            animation: fall linear infinite, sway ease-in-out infinite alternate;
+            pointer-events: none; /* Evita que los pétalos bloqueen los botones */
+        }
+        @keyframes fall { to { top: 110vh; } }
+        @keyframes sway { from { transform: translateX(-20px) rotate(0deg); } to { transform: translateX(20px) rotate(45deg); } }
+    </style>
+</head>
+<body>
+
+    <div id="intro-screen">
+        <h1>Una sorpresa para ti...</h1>
+        <button class="open-btn" onclick="openCard()">Tocar para abrir</button>
+    </div>
+
+    <div id="card-container">
+        
+        <div class="silhouette-frame">
+            <img src="pngtree-spanish-womens-day-word-art-png-image_9031930" alt="Silueta de mujer">
+        </div>
+
+        <h2 class="title">Para mi hermosa Keyla</h2>
+        <div class="subtitle">Mi aguacatita preciosa 🥑❤️</div>
+
+        <div class="message">
+            <p>Desde que llegaste a mi vida, cada momento se ha vuelto mágico. Eres la luz que ilumina mis días y la dueña de todas mis sonrisas. Admiro profundamente tu fuerza, tu belleza y ese corazón tan noble que tienes.</p>
+            <p>Hoy quiero recordarte lo mucho que te amo y lo increíblemente afortunado que me siento de poder caminar a tu lado. Eres mi refugio, mi paz y mi más grande amor.</p>
+            <p>Gracias por ser tú, por quererme como lo haces y por dejarme quererte cada día más. Mi vida es mucho mejor porque tú estás en ella.</p>
+        </div>
+
+        <div class="signature">Siempre tuyo, amor.</div>
+
+        <div class="video-btn" onclick="playVideo()">
+            ▶️
+        </div>
+    </div>
+
+    <div id="video-modal">
+        <video id="my-video" controls playsinline>
+            <source src="lv_7612360065592347957_20260308114326" type="video/mp4">
+        </video>
+        <button class="close-video-btn" onclick="closeVideo()">✖ Cerrar Video</button>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="La Mujer Perfecta - Kurt (Reggae en español- cover)" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const music = document.getElementById('bg-music');
+        const video = document.getElementById('my-video');
+        const videoModal = document.getElementById('video-modal');
+
+        // Función para abrir la tarjeta
+        function openCard() {
+            const intro = document.getElementById('intro-screen');
+            intro.style.opacity = '0'; // Se desvanece suavemente
+            
+            setTimeout(() => {
+                intro.style.display = 'none'; // Desaparece por completo
+                document.getElementById('card-container').style.display = 'flex'; // Muestra la tarjeta
+                music.play().catch(e => console.log("Audio bloqueado por el navegador", e)); // Suena la música
+                startPetalRain(); // Empiezan a caer los pétalos
+            }, 1000);
+        }
+
+        // Función para abrir el video
+        function playVideo() {
+            music.pause(); // Pausamos la música romántica
+            videoModal.style.display = 'flex'; // Mostramos el fondo negro
+            setTimeout(() => { videoModal.style.opacity = '1'; }, 50); // Lo hacemos aparecer suavemente
+            video.play(); // Le damos play al video
+        }
+
+        // Función para cerrar el video
+        function closeVideo() {
+            video.pause(); // Pausamos el video
+            videoModal.style.opacity = '0'; // Desvanecemos el fondo negro
+            setTimeout(() => { 
+                videoModal.style.display = 'none'; // Lo ocultamos
+                music.play(); // Volvemos a poner la música romántica
+            }, 500);
+        }
+
+        // Lluvia de pétalos
+        function startPetalRain() {
+            setInterval(() => {
+                const petal = document.createElement('div');
+                petal.classList.add('petal');
+                
+                const size = Math.random() * 10 + 10; // Tamaño entre 10px y 20px
+                petal.style.width = `${size}px`; 
+                petal.style.height = `${size}px`;
+                petal.style.left = `${Math.random() * 100}vw`;
+                
+                const fallDuration = Math.random() * 4 + 4; // Cae más lento y suave
+                const swayDuration = Math.random() * 2 + 1.5;
+                
+                petal.style.animation = `fall ${fallDuration}s linear infinite, sway ${swayDuration}s ease-in-out infinite alternate`;
+                
+                // Tonos de rojo y vino
+                const colors = ['#d62828', '#9e2a2b', '#ff4d4d', '#780000'];
+                petal.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                document.body.appendChild(petal);
+                setTimeout(() => petal.remove(), fallDuration * 1000);
+            }, 300); // Un pétalo nuevo cada 300ms
+        }
+    </script>
+</body>
+</html>
